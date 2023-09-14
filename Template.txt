@@ -1,0 +1,27 @@
+String Manipulaton - Filters:
+my_name: AlcLabs
+
+Examples:
+ The name {{my_name}} ==> AlcLabs
+ The name {{my_name|upper}} ==> ALCLABS
+ The name {{my_name|lower}} ==> alclabs
+ The name {{my_name|little}} ==> Alclabs
+ The name {my_naame|replace("AlcLabs", "ANSIBLE_LERNERNS")
+ The name {{first_name|default("Kudlu")}} {{my_name}} ==> Kudlu AlcLabs
+
+Filter - List and Set
+1. Min
+{{[1,2,3,4]|min}} ==> 1
+2.Max
+{{[1,2,3,4]|max}} ==> 4
+3.Unique
+{{[1,2,1,4]|unique}} ==> 2,4
+4.Union
+{{[1,2,3,4]|union([5,6])}} ==> 1,2,3,4,5,6
+5.Intersect
+{{[1,2,3,4]|intersect([4,5])}} ==> 4
+6.Random Number
+{{100|random}} ==> Some Random Number
+
+Filters -File:
+{{"/etc/hosts"|basename}} ==> hosts

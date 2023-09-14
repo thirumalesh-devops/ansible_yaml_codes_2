@@ -1,0 +1,80 @@
+---
+- name: Play to demonstraate vmware virtual machine build using template
+  hosts: localhost
+  gather_facts: false
+  become: true
+  vars_files:
+  - vars/vcenter_pass_en.yml
+  vars_prompt:
+  - prompt: "Enter your VM name"
+    private: no
+    name: name
+  - prompt: "Enter vcenter hostname/IPAddress"
+    private: no
+    default: "192.168.1.25"
+    name: hostname
+  - prompt: "Enter vcenter username"
+    default: dec@alclabs.in
+    private: no
+    name: username
+  #- prompt: "Enter vcenter password"
+  #  private: yes
+  #  #default: "{{password}}" #read it from Ansible Vault
+  #  name: password
+  - prompt: "Enter vcenter datacenter"
+    name: datacenter
+    default: blr01
+    private: no
+  - prompt: "Enter the vcenter Esxi hostname [1. 192.168.1.10 or 2. 192.168.1.11]"
+    private: no
+    default: 192.168.1.11
+    name: esxi_hostname
+  - prompt: "Enter the Datastore name"
+    private: no
+    name: datastore
+    default: esxi02DataStore
+  - prompt: "Enter the Template name"
+    private: no
+    default: Template2023
+    name: template
+  - prompt: "Provide the folder name"
+    private: no
+    default: ansible
+    name: folder
+  tasks:
+  - name: Create a VM
+    vmware_guest:
+     hostname: "{{hostname}}"
+     username: "{{username}}"
+     password: "{{password}}"
+     validate_certs: false
+     esxi_hostname: "{{esxi_hostname}}"
+     name: "{{name}}"
+     datacenter: "{{datacenter}}"
+     folder: "{{folder}}"
+     template: "{{template}}"
+     annotation: "Created by Ansible Control Node"
+     state: poweredon
+     disk:
+     - size_gb: 10
+       type: thick
+       datastore: "{{datastore}}"
+     - size_gb: 10
+       type: thick
+       datastore: "{{datastore}}"
+     hardware:
+      memory_mb: 2048
+      memory_reservation: 0
+      num_cpus: 2
+      num_cpu_cores_per_socket: 2
+      scsi: paravirtual
+      hotadd_cpu: true
+     networks:
+     - name: "VM Network"
+       device_type: "vmxnet3"
+     - name: "VM Network"
+       device_type: "vmxnet3"
+     - name: "VM Network"
+       device_type: "vmxnet3"    
+...
+
