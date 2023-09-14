@@ -1,1 +1,3 @@
+Under group_vars there is a filr called reds, in reds file you hav eto add the below content
 
+name: RedMan
